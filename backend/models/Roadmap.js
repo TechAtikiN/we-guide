@@ -33,7 +33,6 @@ const RoadmapSchema = new Schema({
     },
     duration: {
         type: Number,
-        required: true
     },
     colleges: {
         type: String,
