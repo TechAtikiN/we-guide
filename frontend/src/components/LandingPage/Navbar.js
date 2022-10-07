@@ -16,8 +16,10 @@ export default function Navbar({ setAuthState }) {
           <a href="#About Us" className=' text-white text-2xl mt-7 py-1 px-4 rounded-full '>About Us</a>
         </div>
         <div className='space-x-4 text-2xl cursor-pointer font-semibold mr-12 '>
-          <Link to="/auth"><button onClick = { () => setAuthState('login') } className='bg-gray-500 text-white text-2xl py-1 px-4 rounded-2xl'>Login</button></Link>
+          <Link to="/login"><button className='bg-gray-500 text-white text-2xl py-1 px-4 rounded-2xl'>Login</button></Link>
           <Link to="/auth"><button onClick = { () => setAuthState('signup') } className='text-white text-2xl  py-1 px-4 rounded-2xl hover:bg-gray-500 hover:text-white mt-4'>Sign Up</button></Link>
+          {/* <Link to="/register"><button onClick = { () => setAuthState('signup') } className='text-white text-2xl  py-1 px-4 rounded-2xl hover:bg-gray-500 hover:text-white mt-4'>Sign Up</button></Link> */}
+          {/* <Link to="/login"><button className='bg-gray-500 text-white text-2xl py-1 px-4 rounded-md mt-2'>Sign In</button></Link> */}
         </div>
       </div>
 

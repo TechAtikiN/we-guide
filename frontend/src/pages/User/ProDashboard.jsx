@@ -2,13 +2,15 @@ import { Card } from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-// import errorResponse from '../../../../backend/utils/errorResponse';
 import logo from '../../assets/logo.png'
+import Community from '../Community';
+import AddBlog from './AddBlog';
 import Assessment from './Assessment/Assessment';
+import BuildCommunity from './BuildCommunity';
 import MyAssessment from './MyAssessment';
 import Profile from './Profile';
 
-const User = () => {
+const ProDashboard = () => {
     const navigate = useNavigate()
 
     const callUserPage = async () => {
@@ -46,11 +48,11 @@ const User = () => {
             <div>
                 <div className='p-3 flex text-4xl font-bold  text-gray-600 py-1 ml-0 mt-2 rounded-full'>
                 <img className="w-10" src={logo} alt="logo" />
-                <span className="pl-3">weGuide</span>
+                <span className="pl-3">weGuide </span>
                 </div>
 
                 <div class="mt-8 text-center">
-                    <h5 class="hidden mt-4 text-xl font-semibold text-gray-600 lg:block">Janhavi Patil</h5>
+                    <h5 class="hidden mt-4 text-xl font-semibold text-gray-600 lg:block">PRO</h5>
                     <span class="hidden text-gray-400 lg:block">Student</span>
                 </div>
 
@@ -75,21 +77,21 @@ const User = () => {
                         </button>
                     </li>
                     <li>
-                        <button onClick={() => setActive("assessment")} href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
+                        <button onClick={() => setActive("addBlogs")} href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path class="fill-current text-gray-600 group-hover:text-cyan-600" d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
                                 <path class="fill-current text-gray-300 group-hover:text-cyan-300" d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
                             </svg>
-                            <span class="group-hover:text-gray-700">My Assesment</span>
+                            <span class="group-hover:text-gray-700">Add Blogs</span>
                         </button>
                     </li>
                     <li>
-                        <button onClick={() => setActive("quiz")} href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
+                        <button onClick={() => setActive("readBlogs")} href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path class="fill-current text-gray-300 group-hover:text-cyan-300" d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
                                 <path class="fill-current text-gray-600 group-hover:text-cyan-600" fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd" />
                             </svg>
-                            <span class="group-hover:text-gray-700">Attempt Quiz</span>
+                            <span class="group-hover:text-gray-700">Read Blogs</span>
                         </button>
                     </li>
                     <li>
@@ -102,12 +104,12 @@ const User = () => {
                         </button>
                     </li>
                     <li>
-                        <button onClick={() => setActive("report")} href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
+                        <button onClick={() => setActive("community")} href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path class="fill-current text-gray-600 group-hover:text-cyan-600" fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd" />
                                 <path class="fill-current text-gray-300 group-hover:text-cyan-300" d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z" />
                             </svg>
-                            <span class="group-hover:text-gray-700">My Report</span>
+                            <span class="group-hover:text-gray-700">Community</span>
                         </button>
                     </li>
                 </ul>
@@ -175,15 +177,15 @@ const User = () => {
                 </Card> 
             </div>
         }
-            {active === "assessment" &&
+            {active === "addBlogs" &&
             <div className="px-6 pt-6 2xl:container">
-                <MyAssessment />
+                <AddBlog />
             </div>
         }
-            {active === "quiz" &&
+            {active === "readBlogs" &&
             <div className="px-6 pt-6 2xl:container">
                 <Card >
-                    Attempt Quiz
+                    Read Blogs
                 </Card> 
             </div>
         }
@@ -194,11 +196,9 @@ const User = () => {
                 </Card> 
             </div>
         }
-            {active === "report" &&
+            {active === "community" &&
             <div className="px-6 pt-6 2xl:container">
-                <Card >
-                    My Report
-                </Card> 
+                <BuildCommunity /> 
             </div>
         }
         </div>
@@ -208,4 +208,4 @@ const User = () => {
   )
 }
 
-export default User
+export default ProDashboard

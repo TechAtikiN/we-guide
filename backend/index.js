@@ -3,9 +3,10 @@ import express from "express";
 import dotenv from "dotenv"
 import mongoose from "mongoose";
 import authRoute from "./routes/auth.js";
-import usersRoute from "./routes/users.js";
 import roadmapsRoute from "./routes/roadmaps.js";
 import cookieParser from "cookie-parser";
+import errorHandler from "./middleware/error.js";
+import { getPrivateData } from "./controllers/private.js";
 
 
 //middleware
@@ -52,7 +53,10 @@ app.use(cookieParser())
 
 //middlewares
 app.use("/api/auth", authRoute);
-app.use("/api/users", usersRoute);
+app.use("/api/private", getPrivateData)
+
+
+// app.use("/api/users", usersRoute);
 app.use("/api/roadmaps", roadmapsRoute);
 
     
@@ -67,7 +71,15 @@ app.use((err, req, res, next) => {
         })
     })
     
+//Error handler
+app.use(errorHandler);
+
     app.listen(8800, () => {
         connect();
         console.log("Server running on Port 8800!");
     })
+
+process.on("unhandledRejection", (err, promise) => {
+    console.log(`Logged Error: ${err}`);
+    server.close(() => process.exit(1));
+})

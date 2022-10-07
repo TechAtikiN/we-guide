@@ -8,6 +8,6 @@ router.get('/', getBlogs)
 router.get('/:id', getBlog)
 
 //post a new workout
-router.post('/', createBlog)
+router.post('/addblog', createBlog)
 
 module.exports = router;

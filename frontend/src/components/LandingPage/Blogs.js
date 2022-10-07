@@ -28,7 +28,7 @@ export default function Blogs() {
               like English.{" "}
             </h2>
             <h3>By Monalisa Vinci</h3>
-            <button className="text-xl rounded-lg text-white font-semibold bg-teal-500 p-3 m-3">
+            <button onClick={() => alert("Sign up for a pro account")} className="text-xl rounded-lg text-white font-semibold bg-teal-500 p-3 m-3">
               Connect
             </button>
           </div>
@@ -51,7 +51,7 @@ export default function Blogs() {
               like English.{" "}
             </h2>
             <h3>By Nancy Wheeler</h3>
-            <button className="text-xl rounded-lg font-semibold text-white bg-teal-500 p-3 m-3">
+            <button onClick={() => alert("Sign up for a pro account")} className="text-xl rounded-lg font-semibold text-white bg-teal-500 p-3 m-3">
               Connect
             </button>
           </div>
@@ -74,14 +74,14 @@ export default function Blogs() {
               like English.{" "}
             </h2>
             <h3>By Ken Adams</h3>
-            <button className="text-xl rounded-lg font-semibold text-white bg-teal-500 p-3 m-3">
+            <button onClick={() => alert("Sign up for a pro account")} className="text-xl rounded-lg font-semibold text-white bg-teal-500 p-3 m-3">
               Connect
             </button>
           </div>
         </div>
 
       </div>
-      <div className="text-center"><Link to="/blogs"><button className="mt-10 text-white hover:bg-teal-600 text-xl rounded-lg font-semibold bg-teal-500 p-3 m-3">Read More</button></Link></div>
+      <div onClick={() => alert("Sign up for a pro account")} className="text-center"><button className="mt-10 text-white hover:bg-teal-600 text-xl rounded-lg font-semibold bg-teal-500 p-3 m-3">Read More</button></div>
 
     </div>
   );

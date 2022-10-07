@@ -1,135 +1,99 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { Form, FormElement } from "@progress/kendo-react-form";
-import { Button } from "@progress/kendo-react-buttons";
-import { Stepper } from "@progress/kendo-react-layout";
-import Preferences from "./Preferences";
-import Skills from "./Skills";
-import Interests from "./Interests";
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { Interests } from './steps/Interests';
+import { Preferences } from './steps/Preferences';
+import { Skills } from './steps/Skills';
 
-const stepPages = [Skills, Interests, Preferences];
+export default function Assesment() {
 
-const Assesment = () => {
-  const [step, setStep] = React.useState(0);
-  const [formState, setFormState] = React.useState({});
-  const [steps, setSteps] = React.useState([
-    {
-      label: "Select Skills",
-      isValid: undefined,
-    },
-    {
-      label: "Select Interests",
-      isValid: undefined,
-    },
-    {
-      label: "Select Preferences",
-      isValid: undefined,
-    },
-  ]);
-  const lastStepIndex = steps.length - 1;
-  const isLastStep = lastStepIndex === step;
-  const onStepSubmit = React.useCallback(
-    (event) => {
-      const { isValid, values } = event;
-      const currentSteps = steps.map((currentStep, index) => ({
-        ...currentStep,
-        isValid: index === step ? isValid : currentStep.isValid,
-      }));
-      setSteps(currentSteps);
+    const [step, setStep] = useState(1);
+    const [mySkills, setSkills] = useState([])
+    const [myInterests, setInterests] = useState([])
+    const [myPreferences, setPreferences] = useState([])
+    const [roadmaps, setRoadmaps] = useState([])
+    const userData = []
 
-      if (!isValid) {
-        return;
-      }
+    useEffect(() => {
+        const fetchRoadmaps = async () => {
+            const response = await fetch('/roadmap')
+            const data = await response.json();
 
-      setStep(() => Math.min(step + 1, lastStepIndex));
-      setFormState(values);
+            if (response.ok) {
+                setRoadmaps(data)
+            }
+        }
+        fetchRoadmaps()
+    }, [])
+    // console.log(roadmaps)
+    const data = {
+        skills: ['Problem-solving', 'Communication skills', 'Interpersonal skills', 'Medicinal', 'scientific research skills', 'Curiosity', 'Persuasive skills', 'marketing', 'organizing', 'Science wizard', 'technical skills', 'identifying problems', 'Computer science', 'Pressure management', 'Teamwork', 'Communication', 'Management', 'Adaptability'],
+        interests: ['finding solutions', 'Teamwork', 'Photography', 'Blog Writing', 'Networking', 'Languages', 'Creativity', 'Volunteering', 'Music', 'Investing', 'Art', 'Coding', 'Designing'],
+        preferences: ['working with people', 'Communication', 'indoors', 'outdoors', 'travel', 'small team size', 'hybrid', 'Mobility', 'working with data']
+    }
 
-      if (isLastStep) {
-        alert(JSON.stringify(values));
-      }
-    },
-    [steps, isLastStep, step, lastStepIndex]
-  );
-  const onPrevClick = React.useCallback(
-    (event) => {
-      event.preventDefault();
-      setStep(() => Math.max(step - 1, 0));
-    },
-    [step, setStep]
-  );
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
-      <Stepper value={step} items={steps} />
-      <Form
-        initialValues={formState}
-        onSubmitClick={onStepSubmit}
-        render={(formRenderProps) => (
-          <div
-            style={{
-              alignSelf: "center",
-            }}
-          >
-            <FormElement
-              style={{
-                width: 480,
-              }}
-            >
-              {stepPages[step]}
-              <span
-                style={{
-                  marginTop: "40px",
-                }}
-                className={"k-form-separator"}
-              />
-              <div
-                style={{
-                  justifyContent: "space-between",
-                  alignContent: "center",
-                }}
-                className={
-                  "k-form-buttons k-button k-button-md k-rounded-md k-button-solid k-button-solid-bases-end"
-                }
-              >
-                <span
-                  style={{
-                    alignSelf: "center",
-                  }}
-                >
-                  Step {step + 1} of 3
-                </span>
-                <div>
-                  {step !== 0 ? (
-                    <Button
-                      style={{
-                        marginRight: "16px",
-                      }}
-                      onClick={onPrevClick}
-                    >
-                      Previous
-                    </Button>
-                  ) : undefined}
-                  <Button
-                    themeColor={"primary"}
-                    disabled={!formRenderProps.allowSubmit}
-                    onClick={formRenderProps.onSubmit}
-                  >
-                    {isLastStep ? "Submit" : "Next"}
-                  </Button>
-                </div>
-              </div>
-            </FormElement>
-          </div>
-        )}
-      />
-    </div>
-  );
+    userData.push(mySkills)
+    userData.push(myInterests)
+    userData.push(myPreferences)
+
+    const presentInRoadmap = (roadmaps, userDataAll) => {
+        roadmaps.forEach(roadmap => {
+            // const tags = roadmap.tags
+            if (userDataAll.every(item => roadmap.tags.includes(item))) {
+                console.log(roadmap)
+            }
+            // tags.find()
+            // if (userDataAll.every(item => roadmap.tags.includes(item))) {
+
+            // userDataAll.forEach(item => {
+            //     if (tags.find(item)) {
+            //         console.log(roadmap)
+            //     }
+            // })
+        });
+    }
+
+    const userDataAll = []
+
+    const isMyRoadmap = (userData) => {
+        for (let i = 0; i < userData.length; i++) {
+            for (let j = 0; j < userData[i].length; j++) {
+                userDataAll.push(userData[i][j])
+                console.log(userDataAll)
+            }
+        }
+    }
+
+    const isMyRoadmap2 = (userDataAll) => {
+        for (let i = 0; i < userDataAll.length; i++) {
+            presentInRoadmap(roadmaps, userDataAll)
+        }
+    }
+    isMyRoadmap(userData)
+    isMyRoadmap2(userDataAll, roadmaps)
+
+    const handleNext = () => {
+        setStep(step => step + 1);
+    };
+    const handleBack = () => {
+        setStep(step => step - 1);
+    };
+
+    if (step >= 4) {
+        setStep(3)
+    } else if (step <= 0) {
+        setStep(1)
+    }
+
+
+    return (
+        <div>
+            {step === 1 && <Skills mySkills={mySkills} data={data} setSkills={setSkills} />}
+            {step === 2 && <Interests myInterests={myInterests} data={data} setInterests={setInterests} />}
+            {step === 3 && <Preferences myPreferences={myPreferences} data={data} setPreferences={setPreferences} />}
+            <div className='relative flex justify-center bottom-20'>
+                <button className='relative text-2xl p-2 bg-purple-500 rounded-lg px-5 text-white m-3 ' onClick={handleBack}>Back</button>
+                <button className='relative text-2xl p-2 bg-purple-500 rounded-lg px-5 text-white m-3 ' onClick={handleNext}>Next</button>
+            </div>
+        </div>
+    );
 };
-
-
-export default Assesment

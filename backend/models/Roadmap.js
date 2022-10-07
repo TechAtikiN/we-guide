@@ -31,6 +31,9 @@ const RoadmapSchema = new Schema({
         type: String,
         required: true
     },
+    courses: {
+        type: String,
+    },
     duration: {
         type: Number,
     },

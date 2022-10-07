@@ -1,42 +1,79 @@
 import User from "../models/User.js";
-import bcrypt from "bcryptjs";
-import { createError } from "../utils/error.js";
-import jwt from "jsonwebtoken";
+import errorResponse from "../utils/errorResponse.js";
+import authenticate from "../middleware/authenticate.js";
 
 export const register = async (req, res, next) => {
+    const { username, email, password } = req.body;
+
+    // if(!username || !email || !password) {
+    //     return next(new errorResponse("Please fill all the details!", 400))
+    // }
+
+    User.findOne({ email : email })
+    .then((userExists) => {
+        if(userExists) {
+            return next(new errorResponse("Email already exists", 400))
+        }
+    })
+
+    try{
+        const user = await User.create({
+            username, email, password
+     });
+
+        sendToken(user, 201, res);
+
+    } catch (error) {
+        next(error)
+    }
+
+}
+
+export const login = async (req, res, next) => {
+    const { email, password } = req.body;
+
+    if(!email || !password) {
+        return next(new errorResponse("Please provide an email and password", 400))
+    }
+
     try {
+        const user = await User.findOne({ email }).select("+password")
 
-        const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(req.body.password, salt);
+        if(!user){
+            return next(new errorResponse("Invalid Credentials", 401))
+        }
 
-        const newUser = new User({
-            username: req.body.username,
-            email: req.body.email,
-            password: hash
-        })
-        await newUser.save()
-        res.status(200).send("User has been created")
-    } catch (err) {
-        next(err);
+        const isMatch = await user.matchPassword(password);
+
+        if(!isMatch){
+            return next(new errorResponse("Invalid Credentials", 401))
+        } 
+        sendToken(user, 200, res);      
+  
+    } catch (error) {
+        next(error)
     }
 }
-export const login = async (req, res, next) => {
-    try {
-        const user = await User.findOne({ username: req.body.username })
-        if(!user) return next(createError(404, "User not found!"))
 
-        const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password)
-        if(!isPasswordCorrect) 
-            return next(createError(400, "Wrong Password or Username!"));
+export const user = (req, res, next) => {
+    res.send(req.rootUser)
+}
 
-        const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT);
+export const forgotPassword = (req, res, next) => {
+    res.send("Forgot Password")
+}
+export const resetPassword = (req, res, next) => {
+    res.send("Reset Password")
+}
 
+const sendToken = (user, statusCode, res) => {
+    const token = user.getSignedToken() 
+    res.cookie("jwtoken", token, {
+        expires: new Date(Date.now() + 25892000000),
+        httpOnly: true
+    })
 
-        const { password, isAdmin, ...otherDetails } = user._doc;
-        res.cookie("access_token", token, {
-            httpOnly: true,
-        }).status(200).json({...otherDetails})
-    } catch (err) {
-        next(err);
-    }
+    res.status(statusCode).json({ user, success: true, token })
+    return token
+
 }

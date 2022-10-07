@@ -7,7 +7,6 @@ const getBlogs = async (req, res) => {
     res.status(200).json(blogs)
 }
 
-
 //get single Blog
 const getBlog = async (req, res) => {
     const { id } = req.params;
