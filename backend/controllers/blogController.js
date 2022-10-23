@@ -1,14 +1,14 @@
-const Blog = require('../models/blogModel')
-const mongoose = require('mongoose');
+import Blog from '../models/blogModel.js'
+import mongoose from 'mongoose';
 
 //get all Blogs
-const getBlogs = async (req, res) => {
+export const getBlogs = async (req, res) => {
     const blogs = await Blog.find({}).sort({ createdAt: -1 })
     res.status(200).json(blogs)
 }
 
 //get single Blog
-const getBlog = async (req, res) => {
+export const getBlog = async (req, res) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ mssg: 'No such blog' })
@@ -22,7 +22,7 @@ const getBlog = async (req, res) => {
 
 
 //post a new Blog
-const createBlog = async (req, res) => {
+export const createBlog = async (req, res) => {
 
     const { title, author, likes, body } = req.body;
     //ADD DOC TO DB
@@ -32,7 +32,4 @@ const createBlog = async (req, res) => {
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
-}
-module.exports = {
-    createBlog, getBlog, getBlogs
 }

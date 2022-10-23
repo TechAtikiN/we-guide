@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.png'
 import Community from '../Community';
 import AddBlog from './AddBlog';
-import Assessment from './Assessment/Assessment';
+import Assesment from './Assessment/Assesment';
 import BuildCommunity from './BuildCommunity';
 import MyAssessment from './MyAssessment';
 import Profile from './Profile';

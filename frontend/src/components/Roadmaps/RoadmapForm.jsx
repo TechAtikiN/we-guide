@@ -2,16 +2,44 @@
 import React, { useState } from 'react'
 
 export const RoadmapForm = () => {
-    const [name, setName] = useState('')
+    const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
-    const [skills, setskills] = useState([])
-    const [exam, setExam] = useState('')
     const [stream, setStream] = useState([])
-    const [HEdu, setHEdu] = useState('')
-    const [Recruiters, setRecruiters] = useState('')
+    const [tags, setTags] = useState([])
+    const [eligibility, setEligibility] = useState('')
+    const [entranceExams, setEntranceExams] = useState('')
+    const [courses, setCourses] = useState('')
     const [duration, setDuration] = useState('')
-    const [job, setJob] = useState('')
+    const [recruiters, setRecruiters] = useState('')
+    const [averageSalary, setAverageSalary] = useState('')
+    const [colleges, setColleges] = useState('')
+    const [higherStudies, setHigherStudies] = useState('')
+    const [jobProfiles, setJobProfiles] = useState('')
 
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const roadmap = {
+            title, desc, stream, tags, eligibility,
+            entranceExams, courses, duration, recruiters, averageSalary,
+            colleges, higherStudies, jobProfiles
+        }
+
+        const response = await fetch('/roadmap/addRoadmap', {
+            method: 'POST',
+            body: JSON.stringify(roadmap),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const json = await response.json()
+        console.log(json)
+        if (response.ok) {
+            console.log("new roadmap added")
+            alert("Roadmap added successfully")
+        }
+
+    }
 
     return (
         <div className='relative'>
@@ -21,6 +49,7 @@ export const RoadmapForm = () => {
                 alt='bg' />
             <div className=''>
                 <form
+                    onSubmit={handleSubmit}
                     className='absolute left-0 top-0 bottom-0 text-gray-300 font-serif'>
                     <h1 className='text-6xl mt-10 ml-10 font-semibold'>Add a new Roadmap</h1>
 
@@ -31,8 +60,8 @@ export const RoadmapForm = () => {
                                 className='form-input'
                                 placeholder="Name of the roadmap"
                                 type="text"
-                                onChange={(e) => setName(e.target.value)}
-                                value={name}
+                                onChange={(e) => setTitle(e.target.value)}
+                                value={title}
                             />
                             <label className=' form-label'>Description</label>
                             <textarea
@@ -48,16 +77,32 @@ export const RoadmapForm = () => {
                                 className='form-input'
                                 placeholder='Add skillset required '
                                 type="text"
-                                onChange={(e) => setskills(e.target.value)}
-                                value={skills}
+                                onChange={(e) => setTags(e.target.value)}
+                                value={tags}
                             />
                             <label className=' form-label'>Entrance Exams</label>
                             <input
                                 className='form-input'
                                 placeholder='Entrance exams'
                                 type="text"
-                                onChange={(e) => setExam(e.target.value)}
-                                value={exam}
+                                onChange={(e) => setEntranceExams(e.target.value)}
+                                value={entranceExams}
+                            />
+                            <label className=' form-label'>Eligibility</label>
+                            <input
+                                className='form-input'
+                                placeholder='Eligibility '
+                                type="text"
+                                onChange={(e) => setEligibility(e.target.value)}
+                                value={eligibility}
+                            />
+                            <label className=' form-label'>Courses</label>
+                            <input
+                                className='form-input'
+                                placeholder='Courses '
+                                type="text"
+                                onChange={(e) => setCourses(e.target.value)}
+                                value={courses}
                             />
                         </div>
                         <div className='flex flex-col'>
@@ -76,17 +121,17 @@ export const RoadmapForm = () => {
                                 className='form-input bg-gray-100'
                                 placeholder='Higher Eductaion '
                                 type="text"
-                                onChange={(e) => setHEdu(e.target.value)}
-                                value={HEdu}
+                                onChange={(e) => setHigherStudies(e.target.value)}
+                                value={higherStudies}
                             />
 
-                            <label className='form-label'>Top Recruiters</label>
+                            <label className='form-label'>Top recruiters</label>
                             <input
                                 className='form-input bg-gray-100'
                                 placeholder='Top recruiters '
                                 type="text"
                                 onChange={(e) => setRecruiters(e.target.value)}
-                                value={Recruiters}
+                                value={recruiters}
                             />
                             <label className='form-label'>Duration</label>
                             <input
@@ -101,8 +146,24 @@ export const RoadmapForm = () => {
                                 className='form-input'
                                 placeholder='Job Profile'
                                 type="text"
-                                onChange={(e) => setJob(e.target.value)}
-                                value={job}
+                                onChange={(e) => setJobProfiles(e.target.value)}
+                                value={jobProfiles}
+                            />
+                            <label className=' form-label'>Average Salary</label>
+                            <input
+                                className='form-input'
+                                placeholder='Average Salary'
+                                type="text"
+                                onChange={(e) => setAverageSalary(e.target.value)}
+                                value={averageSalary}
+                            />
+                            <label className=' form-label'>Colleges</label>
+                            <input
+                                className='form-input'
+                                placeholder='Colleges'
+                                type="text"
+                                onChange={(e) => setColleges(e.target.value)}
+                                value={colleges}
                             />
                         </div>
                     </div>

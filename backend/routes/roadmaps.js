@@ -1,6 +1,5 @@
 import express from "express";
 import { createRoadmap, deleteRoadmap, getAllRoadmap, getRoadmap, updateRoadmap } from "../controllers/roadmapController.js";
-import { createError } from "../utils/error.js";
 
 const router = express.Router();
 

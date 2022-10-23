@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 // import errorResponse from '../../../../backend/utils/errorResponse';
 import logo from '../../assets/logo.png'
-import Assessment from './Assessment/Assessment';
+import Assesment from './Assessment/Assesment';
 import MyAssessment from './MyAssessment';
 import Profile from './Profile';
 

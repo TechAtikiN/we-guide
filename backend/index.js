@@ -7,6 +7,7 @@ import roadmapsRoute from "./routes/roadmaps.js";
 import cookieParser from "cookie-parser";
 import errorHandler from "./middleware/error.js";
 import { getPrivateData } from "./controllers/private.js";
+import blogRoutes from './routes/blogs.js'
 
 
 //middleware
@@ -16,11 +17,14 @@ import { getPrivateData } from "./controllers/private.js";
 //     next();
 // })
 
-//routes
-// app.get('/', (req, res) => {
-//     res.json({ mssg: 'welcome to the app' })
-// })
-// app.use('/blogs', blogRoutes)
+const app = express();
+dotenv.config();
+
+// routes
+app.get('/', (req, res) => {
+    res.json({ mssg: 'welcome to the app' })
+})
+app.use('/blogs', blogRoutes)
 
 // mongoose.connect(process.env.MONGO_URI)
 //     .then(() => {
@@ -32,8 +36,6 @@ import { getPrivateData } from "./controllers/private.js";
 //         console.log(error)
 //     })
 
-const app = express();
-dotenv.config();
     
     const connect = async () => {
         try {

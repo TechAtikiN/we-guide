@@ -3,8 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Authentication from './pages/Authentication';
 import Blogs from './components/Blogs/Blogs';
 import User from './pages/User/User';
-import Assessment from './pages/User/Assessment/Assessment'
-import ShowRoadmap from './pages/ShowRoadmap';
+import Assesment from './pages/User/Assessment/Assesment';
+// import ShowRoadmap from './pages/ShowRoadmap';
 import { BlogForm } from './components/Blogs/BlogForm'
 import React from 'react';
 import { RoadmapForm } from './components/Roadmaps/RoadmapForm';
@@ -13,6 +13,9 @@ import Community from './pages/Community';
 import SignUp from './components/auth/SignUp';
 import Login from './components/auth/Login';
 import ProDashboard from './pages/User/ProDashboard';
+import ShowRoadmap from './components/Roadmaps/RoadmapTemplate';
+
+
 function App() {
   return (
     <BrowserRouter>
@@ -28,12 +31,13 @@ function App() {
         <Route path="/auth" element={<Authentication />} />
         <Route path="/user" element={<User />} />
         <Route path="/blogs" element={<Blogs />} />
-        <Route path="/user/assessment" element={<Assessment />} />
+        <Route path="/user/assessment" element={<Assesment />} />
         <Route path="/user/roadmap" element={<ShowRoadmap />} />
         <Route path="/blogs/addblog" element={<BlogForm />} />
         <Route path="/admin/addRoadmap" element={<RoadmapForm />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/proweguide/community" element={<Community />} />
+        <Route path="/myRoadmap" element={<ShowRoadmap />} />
       </Routes>
     </BrowserRouter>
   );

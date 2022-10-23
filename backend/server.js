@@ -2,11 +2,12 @@ require('dotenv').config()
 const blogRoutes = require('./routes/blogs')
 const express = require('express')
 const mongoose = require('mongoose')
-
+const roadmapRoutes = require('./routes/Roadmaps')
 const app = express()
 
 //middleware
 app.use(express.json());
+
 app.use((req, res, next) => {
     console.log(req.path, req.method);
     next();
@@ -20,7 +21,7 @@ app.get('/myassessment', (req, res) => {
     res.json({ mssg: "Please give assessment" })
 })
 app.use('/blogs', blogRoutes)
-
+app.use('/roadmap', roadmapRoutes)
 
 
 mongoose.connect(process.env.MONGO_URI)
